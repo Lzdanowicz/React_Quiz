@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import QuizOptions from './QuizOptions.js';
+import QuizOptions from './QuizOptions.js';
 import Request from 'superagent';
 
 class Quiz extends Component {
@@ -11,8 +11,11 @@ class Quiz extends Component {
 			fieldOptions: []
 		}
 
+		this.renderOptions = this.renderOptions.bind(this);
+
 		// this.renderOptions = this.renderOptions.bind(this);
 	}
+
 
 	randomNumber(min, max) {
 		return Math.floor(Math.random() * (max-min+1)) + min;
@@ -26,15 +29,59 @@ class Quiz extends Component {
 			var playersData = response.body;
 			var randomNumber = randomNumberGen(0,responseLength);
 			this.setState({
-				correctPlayer: playersData[randomNumber]
+				correctPlayer: playersData[randomNumber],
+				fieldOptions: setFieldOptions()
 			})
-			console.log(this)
+
+			function shuffle(array) {
+			    let counter = array.length;
+
+			    // While there are elements in the array
+			    while (counter > 0) {
+			        // Pick a random index
+			        let index = Math.floor(Math.random() * counter);
+
+			        // Decrease counter by 1
+			        counter--;
+
+			        // And swap the last element with it
+			        let temp = array[counter];
+			        array[counter] = array[index];
+			        array[index] = temp;
+			    }
+
+			    return array;
+			}
+
+			function setFieldOptions() {
+				var fieldOptionsHolder = []
+				fieldOptionsHolder.push(playersData[randomNumber])
+				while (fieldOptionsHolder.length < 4) {
+					var randomPlayer = playersData[randomNumberGen(0,responseLength)]
+					if (fieldOptionsHolder.includes(randomPlayer)) {
+						continue
+					}
+					fieldOptionsHolder.push(randomPlayer)
+				}
+				var randomizedSelection = shuffle(fieldOptionsHolder);
+				return randomizedSelection
+			}
 		});
+
+	}
+
+	renderOptions() {
+		return(
+			<div className="options">
+				{ this.state.fieldOptions.map((option, i) =>
+					<QuizOptions option={option} key={i}/>
+				)}
+			</div>
+		)
 	}
 
 
 	render() {
-		console.log(this.state)
 		return (
 			<div className="quiz">
 				<div className="quiz-content">
@@ -43,6 +90,7 @@ class Quiz extends Component {
 				<div className="player-image">
 					<img src={this.state.correctPlayer.PhotoUrl} />
 				</div>
+				{this.renderOptions()}
 			</div>
 		)
 	}
