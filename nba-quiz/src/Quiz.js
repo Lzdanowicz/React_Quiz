@@ -6,22 +6,43 @@ class Quiz extends Component {
 	constructor(props) {
 		super(props);
 
+		let playGame = this.playGame();
+		let correct = false;
+		let gameOver = false;
+		let score = 0;
+		let questionCount = 10;
+
 		this.state = {
 			correctPlayer: {},
 			fieldOptions: []
 		}
 
 		this.renderOptions = this.renderOptions.bind(this);
-
+		this.correctAnswerEvent = this.correctAnswerEvent.bind(this);
+		this.checkResults = this.checkResults.bind(this);
+		this.play = this.play.bind(this);
 		// this.renderOptions = this.renderOptions.bind(this);
 	}
 
+	correctAnswerEvent() {
+		this.play();
+	}
+
+	checkResults(playerId) {
+		if (playerId === this.state.correctPlayer.PlayerID) {
+			this.correctAnswerEvent()
+		} else {
+			
+		}
+	}
 
 	randomNumber(min, max) {
 		return Math.floor(Math.random() * (max-min+1)) + min;
 	}
 
-	componentWillMount() {
+
+	playGame() {
+		console.log("YOLO")
 		var url = 'https://api.fantasydata.net/nba/v2/json/Players';
 		var randomNumberGen = this.randomNumber;
 		Request.get(url).set("Ocp-Apim-Subscription-Key", "0aa332c1c9e547679652afd412b94c77").end((err, response) => {
@@ -70,11 +91,16 @@ class Quiz extends Component {
 
 	}
 
+	play() {
+		this.setState({correct: false, gameOver: false});
+		this.playGame();
+	}
+
 	renderOptions() {
 		return(
 			<div className="options">
 				{ this.state.fieldOptions.map((option, i) =>
-					<QuizOptions option={option} key={i}/>
+					<QuizOptions option={option} key={i} checkResults={ (option) => this.checkResults(option.PlayerID)} />
 				)}
 			</div>
 		)

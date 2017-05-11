@@ -43,6 +43,7 @@
 .fields:hover {
   background-color: black;
   color: white;
+  cursor: pointer;
 }
 
 .field-block {
