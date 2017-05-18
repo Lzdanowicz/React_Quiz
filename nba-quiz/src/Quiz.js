@@ -8,13 +8,12 @@ class Quiz extends Component {
 
 		let playGame = this.playGame();
 		let correct = false;
-		let gameOver = false;
-		let score = 0;
-		let questionCount = 10;
 
 		this.state = {
 			correctPlayer: {},
-			fieldOptions: []
+			fieldOptions: [],
+			questionCount: 10,
+			score: 0
 		}
 
 		this.renderOptions = this.renderOptions.bind(this);
@@ -25,14 +24,31 @@ class Quiz extends Component {
 	}
 
 	correctAnswerEvent() {
-		this.play();
+		this.setState({
+			questionCount: this.state.questionCount - 1,
+			score: this.state.score + 1
+		})
+		console.log(this.state)
+		if (this.state.questionCount > 8) {
+			this.play();
+		} else {
+			this.gameOver()
+		}
+	}
+
+	gameOver() {
+		
+	}
+
+	wrongAnswerEvent() {
+		console.log("WRONG");
 	}
 
 	checkResults(playerId) {
 		if (playerId === this.state.correctPlayer.PlayerID) {
-			this.correctAnswerEvent()
+			this.correctAnswerEvent();
 		} else {
-			
+			this.wrongAnswerEvent();
 		}
 	}
 
@@ -112,6 +128,7 @@ class Quiz extends Component {
 			<div className="quiz">
 				<div className="quiz-content">
 					<p className="question">Who Is This Guy?</p>
+					<p className="score-count">Score: {this.state.score}</p>
 				</div>
 				<div className="player-image">
 					<img src={this.state.correctPlayer.PhotoUrl} />

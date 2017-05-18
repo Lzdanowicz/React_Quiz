@@ -15,7 +15,6 @@ class QuizOptions extends Component {
 
 
 	render() {
-		console.log(this.props.option)
 		return (
 		<div className="fields" onClick={this.callParentCheckOptions}>
 			<div className="field-block">{this.props.option.FirstName} {this.props.option.LastName} </div>
