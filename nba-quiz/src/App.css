@@ -2,6 +2,18 @@
   text-align: center;
 }
 
+.game-over-screen {
+  display: none;
+}
+
+.game-over .quiz {
+  display: none;
+}
+
+.game-over .game-over-screen {
+  display: block;
+}
+
 .quiz {
   margin: 2%;
   padding: 2%;

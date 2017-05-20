@@ -13,7 +13,9 @@ class Quiz extends Component {
 			correctPlayer: {},
 			fieldOptions: [],
 			questionCount: 10,
-			score: 0
+			score: 0,
+			wrongAnswer: false,
+			gameOver: false
 		}
 
 		this.renderOptions = this.renderOptions.bind(this);
@@ -28,7 +30,23 @@ class Quiz extends Component {
 			questionCount: this.state.questionCount - 1,
 			score: this.state.score + 1
 		})
-		console.log(this.state)
+		if (this.state.questionCount > 8) {
+			this.setState({
+				correctAnswer: true
+			})
+
+			var that = this
+
+			setTimeout(function(){
+				that.play();
+			}, 3000)
+
+		} else {
+			this.gameOver()
+		}
+	}
+
+	checkQuestionCount() {
 		if (this.state.questionCount > 8) {
 			this.play();
 		} else {
@@ -36,12 +54,43 @@ class Quiz extends Component {
 		}
 	}
 
+	updateShared(prop){
+    	this.props.updateShared(prop);
+  	}
+
 	gameOver() {
-		
+		this.setState({
+			gameOver: true
+		})
+
+		var that = this
+
+		var sharedObject = {
+			gameOver: "game-over",
+			score: that.state.score
+		}
+		this.updateShared(sharedObject)
 	}
 
 	wrongAnswerEvent() {
-		console.log("WRONG");
+		this.setState({
+			questionCount: this.state.questionCount - 1
+		})
+		if (this.state.questionCount > 8) {
+
+			this.setState({
+				wrongAnswer: true
+			})
+
+			var that = this
+
+			setTimeout(function(){
+				that.play();
+			}, 3000)
+
+		} else {
+			this.gameOver()
+		}
 	}
 
 	checkResults(playerId) {
@@ -58,7 +107,6 @@ class Quiz extends Component {
 
 
 	playGame() {
-		console.log("YOLO")
 		var url = 'https://api.fantasydata.net/nba/v2/json/Players';
 		var randomNumberGen = this.randomNumber;
 		Request.get(url).set("Ocp-Apim-Subscription-Key", "0aa332c1c9e547679652afd412b94c77").end((err, response) => {
@@ -108,18 +156,33 @@ class Quiz extends Component {
 	}
 
 	play() {
-		this.setState({correct: false, gameOver: false});
+		this.setState({correctAnswer: false, gameOver: false, wrongAnswer: false});
 		this.playGame();
 	}
 
 	renderOptions() {
-		return(
-			<div className="options">
-				{ this.state.fieldOptions.map((option, i) =>
-					<QuizOptions option={option} key={i} checkResults={ (option) => this.checkResults(option.PlayerID)} />
-				)}
-			</div>
-		)
+		console.log(this.state)
+		if (!this.state.wrongAnswer & !this.state.correctAnswer) {
+			return(
+				<div className="options">
+					{ this.state.fieldOptions.map((option, i) =>
+						<QuizOptions option={option} key={i} checkResults={ (option) => this.checkResults(option.PlayerID)} />
+					)}
+				</div>
+			)
+		} else if (this.state.wrongAnswer) {
+			return (
+				<div className="wrong">
+					<h2> Wrong! </h2>
+				</div>
+			)
+		} else if (this.state.correctAnswer) {
+			return (
+				<div className="correct">
+					<h2> Correct! </h2>
+				</div>
+			)
+		}
 	}
 
 
