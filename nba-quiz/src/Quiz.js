@@ -30,7 +30,7 @@ class Quiz extends Component {
 			questionCount: this.state.questionCount - 1,
 			score: this.state.score + 1
 		})
-		if (this.state.questionCount > 8) {
+		if (this.state.questionCount > 0) {
 			this.setState({
 				correctAnswer: true
 			})
@@ -47,7 +47,7 @@ class Quiz extends Component {
 	}
 
 	checkQuestionCount() {
-		if (this.state.questionCount > 8) {
+		if (this.state.questionCount > 0) {
 			this.play();
 		} else {
 			this.gameOver()
@@ -76,7 +76,7 @@ class Quiz extends Component {
 		this.setState({
 			questionCount: this.state.questionCount - 1
 		})
-		if (this.state.questionCount > 8) {
+		if (this.state.questionCount > 0) {
 
 			this.setState({
 				wrongAnswer: true
