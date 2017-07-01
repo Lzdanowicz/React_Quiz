@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 
 
-class QuizOptions extends Component {
+class QuizChoice extends Component {
 	constructor(props) {
 		super(props)
 
-		this.state = {};
+		// this.state = {};
 		this.callParentCheckOptions = this.callParentCheckOptions.bind(this)
+
 	}
 
 	callParentCheckOptions() {
@@ -16,11 +17,11 @@ class QuizOptions extends Component {
 
 	render() {
 		return (
-		<div className="fields" onClick={this.callParentCheckOptions}>
-			<div className="field-block">{this.props.option.FirstName} {this.props.option.LastName} </div>
+		<div className="fields" onClick={() => { this.callParentCheckOptions() }}>
+			<div className="field-block"> {this.props.option.FirstName} {this.props.option.LastName} </div>
 		</div>
 		)
 	}
 }
 
-export default QuizOptions
+export default QuizChoice

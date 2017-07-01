@@ -6,12 +6,30 @@
   display: none;
 }
 
-.game-over .quiz {
+.game-start-screen {
   display: none;
 }
 
 .game-over .game-over-screen {
   display: block;
+  text-align: center;
+}
+
+.game-over .options {
+  display: none;
+}
+
+.game-start .game-start-screen {
+  display: block;
+  text-align: center;
+}
+
+.game-start .quiz {
+  display: none;
+}
+
+.game-over .quiz {
+  display: none;
 }
 
 .quiz {
@@ -56,6 +74,16 @@
   background-color: black;
   color: white;
   cursor: pointer;
+}
+
+.wrong {
+  color: red;
+  text-align: center;
+}
+
+.correct {
+  color: green;
+  text-align: center;
 }
 
 .field-block {
