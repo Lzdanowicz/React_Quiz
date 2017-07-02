@@ -18,7 +18,9 @@ app.use('/', function (req, res) {
 	res.sendFile(path.resolve('client/index.html'));
 });
 
-app.listen(process.env.PORT || 3000, function(error) {
+var port = process.env.PORT || 3000;
+
+app.listen(port, function(error) {
 	if (error) throw error;
 	console.log("Express server listening on port", port);
 })
