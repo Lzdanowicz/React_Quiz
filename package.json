@@ -30,5 +30,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "heroku-postbuild": "webpack -p --config ./webpack.prod.config.js --progress"
+  },
+  "engines": {
+    "node": "6.9.4"
   }
 }
