@@ -9,6 +9,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-hmre": "^1.1.1",
+    "css-loader": "^0.28.4",
     "express": "^4.15.3",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
@@ -16,6 +17,7 @@
     "redux": "^3.6.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
+    "style-loader": "^0.18.2",
     "superagent": "^3.5.2",
     "webpack": "^2.6.1",
     "webpack-hot-middleware": "^2.18.0"
@@ -23,7 +25,8 @@
   "devDependencies": {
     "babel-preset-react-hmre": "^1.1.1",
     "css-loader": "^0.28.4",
-    "react-scripts": "0.9.5"
+    "react-scripts": "0.9.5",
+    "style-loader": "^0.18.2"
   },
   "scripts": {
     "build": "react-scripts build",

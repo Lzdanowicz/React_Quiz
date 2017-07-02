@@ -1,8 +1,8 @@
 import React from 'react';
 import App from '../components/App';
-import { render } from 'react-dom'
+import { render } from 'react-dom';
 import './index.css';
-import { applyMiddleware, createStore } from 'redux'
+import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import Request from 'superagent';
 import { createLogger } from 'redux-logger';
